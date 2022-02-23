@@ -1,6 +1,7 @@
+global using Serilog;
 using gym_app_backend.Extensions;
-using Serilog;
 
+// Serilog Logger setup for NET 6 referenced from https://github.com/datalust/dotnet6-serilog-example
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
@@ -15,10 +16,14 @@ try
         .ReadFrom.Configuration(ctx.Configuration));
 
     // Add services to the container.
+    builder.Services.AddFirebaseAuthentication(builder.Configuration);
+        
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    // Made extension for Firebase. Research if this is necessary in the future as it's not really using the IServiceCollection in the method at the moment.
     builder.Services.AddFirebaseAdmin(builder.Configuration);
 
     var app = builder.Build();
@@ -31,6 +36,8 @@ try
     }
 
     app.UseHttpsRedirection();
+
+    app.UseAuthentication();
 
     app.UseAuthorization();
 

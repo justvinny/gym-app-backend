@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace gym_app_backend.Controllers
 {
@@ -10,6 +9,7 @@ namespace gym_app_backend.Controllers
     {
         // GET: api/<ValuesController>
         [HttpGet]
+        [Authorize]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -17,6 +17,7 @@ namespace gym_app_backend.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public string Get(int id)
         {
             return $"{id} returned boyyy.";
@@ -24,18 +25,21 @@ namespace gym_app_backend.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] string value)
         {
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public void Delete(int id)
         {
         }
